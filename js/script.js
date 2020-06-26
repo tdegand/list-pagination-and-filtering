@@ -37,7 +37,7 @@ const studentsPerPage = 10;
 
 const showPage = (list, page) => {
    const startIndex = parseInt((page * 10) - 10);
-   const endIndex = parseInt(page * 10);
+   const endIndex = parseInt(page * 10) - 1;
 
    for (let i = 0; i < list.length; i += 1) {
       if (i >= startIndex && i <= endIndex) {
