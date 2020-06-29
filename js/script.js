@@ -10,19 +10,11 @@ const studentsPerPage = 10;
 
 
 /***
-   Create the `showPage` function to hide all of the items in the
-   list except for the ten you want to show.
-
-   Pro Tips:
-     - Keep in mind that with a list of 54 students, the last page
-       will only display four.
-     - Remember that the first student has an index of 0.
-     - Remember that a function `parameter` goes in the parens when
-       you initially define the function, and it acts as a variable
-       or a placeholder to represent the actual function `argument`
-       that will be passed into the parens later when you call or
-       "invoke" the function
-***/
+ * ShowPage function finds the 
+ * start index of an item based on page number entered
+ * end of the index based on page number
+ * returns the amount of list items with a total of 10 based on the page number entered
+ ***/
 
 const showPage = (list, page) => {
    const startIndex = parseInt((page * 10) - 10);
@@ -38,8 +30,9 @@ const showPage = (list, page) => {
 }
 showPage(studentList, 1);
 /***
-   Create the `appendPageLinks function` to generate, append, and add
-   functionality to the pagination buttons.
+   appendPAgeLinks-
+   finds Max Number of pages based on how many items are in the list of data
+   creates the Elements to display the pagination links
 ***/
 
 const appendPageLinks = (list) => {
@@ -59,6 +52,8 @@ const appendPageLinks = (list) => {
    const paginationLinks = document.getElementsByTagName('a');
    paginationLinks[0].className = 'active';
 
+   //Add event listener on previously created buttons to show new page when new button is clicked and add CSS styles to active button/page.
+
    pagDiv.addEventListener('click', (event) => {
       let pageNumber = parseInt(event.target.innerHTML);
       showPage(studentList, pageNumber);
@@ -73,5 +68,3 @@ const appendPageLinks = (list) => {
 
 }
 appendPageLinks(studentList);
-
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
