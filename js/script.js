@@ -40,7 +40,7 @@ const appendPageLinks = (list) => {
    for (let h = 0; h < maxPages; h++) {
       const newListItem = document.createElement('li');
       newList.appendChild(newListItem);
-      newListItem.innerHTML = `<a class="pagLinks" href="#">${h + 1}</a>`;
+      newListItem.innerHTML = `<a href="#">${h + 1}</a>`;
    }
    const paginationLinks = document.getElementsByTagName('a');
    paginationLinks[0].className = 'active';
@@ -51,9 +51,7 @@ const appendPageLinks = (list) => {
       let pageNumber = parseInt(event.target.innerHTML);
       showPage(studentList, pageNumber);
       for (let j = 0; j < paginationLinks.length; j++) {
-         if (paginationLinks.className === 'active') {
-            paginationLinks.classList.remove('active');
-         }
+         paginationLinks[j].classList.remove('active');
       }
       event.target.className = 'active';
       event.preventDefault();
