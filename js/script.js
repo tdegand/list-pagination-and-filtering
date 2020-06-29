@@ -1,7 +1,6 @@
 const studentList = document.querySelectorAll('.student-item');
 const studentsPerPage = 10;
 
-
 /***
  * ShowPage function finds the 
  * start index of an item based on page number entered
@@ -22,6 +21,7 @@ const showPage = (list, page) => {
    }
 }
 showPage(studentList, 1);
+
 /***
    appendPAgeLinks-
    finds Max Number of pages based on how many items are in the list of data
