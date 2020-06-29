@@ -5,7 +5,7 @@ FSJS project 2 - List Filter and Pagination
 
 // Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
-const studentList = document.getElementsByTagName('li');
+const studentList = document.querySelectorAll('.student-item');
 const studentsPerPage = 10;
 
 
@@ -36,6 +36,7 @@ const showPage = (list, page) => {
       }
    }
 }
+showPage(studentList, 1);
 /***
    Create the `appendPageLinks function` to generate, append, and add
    functionality to the pagination buttons.
@@ -49,21 +50,24 @@ const appendPageLinks = (list) => {
    const newList = document.createElement('ul');
    pagDiv.appendChild(newList);
 
-   for (let i = 0; i < maxPages; i++) {
+
+   for (let h = 0; h < maxPages; h++) {
       const newListItem = document.createElement('li');
       newList.appendChild(newListItem);
-      newListItem.innerHTML = `<a href="#">${i + 1}</a>`;
+      newListItem.innerHTML = `<a class="pagLinks" href="#">${h + 1}</a>`;
    }
    const paginationLinks = document.getElementsByTagName('a');
+   paginationLinks[0].className = 'active';
 
    pagDiv.addEventListener('click', (event) => {
+      let pageNumber = parseInt(event.target.innerHTML);
+      showPage(studentList, pageNumber);
       for (let j = 0; j < paginationLinks.length; j++) {
-         if (event.target.classList.contains('active') === false) {
-            event.target.classList.add('active');
-         } else if (newList.children.classList === 'active') {
-            event.target.classList.remove('active');
+         if (paginationLinks.className === 'active') {
+            paginationLinks.classList.remove('active');
          }
       }
+      event.target.className = 'active';
       event.preventDefault();
    });
 
