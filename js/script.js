@@ -82,7 +82,7 @@ const searchBar = (list) => {
    /**
     * Event listener for submit button for the search
     */
-   
+
    searchBut.addEventListener('click', (event) => {
       const filter = newInput.value.toLowerCase();
       for (let i = 0; i < list.length; i++) {
