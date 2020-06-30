@@ -74,7 +74,7 @@ const searchBar = (list) => {
    const newInput = document.createElement('input');
    newInput.placeholder = 'Search...';
    const searchBut = document.createElement('button');
-   searchBut.innerHTML = 'Search';
+   searchBut.innerHTML = 'Reset';
    pagDiv.appendChild(newInput);
    pagDiv.appendChild(searchBut);
    const noMatches = document.createElement('h3');
@@ -82,26 +82,10 @@ const searchBar = (list) => {
    /**
     * Event listener for submit button for the search
     */
-
    searchBut.addEventListener('click', (event) => {
-      const filter = newInput.value.toLowerCase();
       for (let i = 0; i < list.length; i++) {
-         const listItems = list[i].innerText.toLowerCase() || list[i].innerHTML.toLowerCase();
-
-         if (listItems.indexOf(filter) > -1 && event.target || filter === '') {
-            list[i].style.display = '';
-            noMatches.style.display = 'none';
-         } else {
-            list[i].style.display = 'none';
-            parentDiv.parentNode.insertBefore(noMatches, parentDiv.nextSibling);
-            noMatches.style.display = 'block';
-         }
-         if (filter !== listItems) {
-            noMatches.innerText = "No matches found";
-         }
-      }
-      if (filter === '') {
-         alert('Search cannot be empty!');
+         list[i].style.display = 'block';
+         noMatches.style.display = 'none';
       }
    });
 
@@ -110,6 +94,21 @@ const searchBar = (list) => {
     */
 
    parentDiv.addEventListener('keyup', (event) => {
+      const removePag = document.querySelector('.pagination ul').className = 'pag-parent';
+      const pagParent = document.querySelector('.pag-parent');
+
+      //remove previous pagination links
+
+      const removePagLinks = () => {
+         while (pagParent.firstChild) {
+            pagParent.removeChild(pagParent.lastChild)
+         }
+      }
+      removePagLinks();
+
+      //Filter the list of users to match what is searched
+
+
       for (let i = 0; i < list.length; i++) {
          const filter = newInput.value.toLowerCase();
          const listItems = list[i].innerText.toLowerCase() || list[i].innerHTML.toLowerCase();
@@ -128,8 +127,24 @@ const searchBar = (list) => {
          }
       }
 
+      const numberOfItems = Math.floor(list[i].length / studentsPerPage) + 1;
+
+      //create new pagination links based on the number of items returned
+
+
+
+      for (let h = 0; h < numberOfItems; h++) {
+         const newListItem = document.createElement('li');
+         pagParent.appendChild(newListItem);
+         newListItem.innerHTML = `<a href="#">${h + 1}</a>`;
+      }
+      const paginationLinks = document.getElementsByTagName('a');
+      paginationLinks[0].className = 'active';
+
+
+
+
       event.preventDefault();
    });
 }
-
 searchBar(studentList);
