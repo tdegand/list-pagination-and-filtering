@@ -34,7 +34,17 @@ const appendPageLinks = (list) => {
    const pagDiv = document.createElement('div');
    parentDiv.appendChild(pagDiv).className = 'pagination';
    const newList = document.createElement('ul');
+   newList.className = 'pagParent';
    pagDiv.appendChild(newList);
+   /**
+    * remove previous pagination links
+    * Add new pagination links if the links do not exist
+    * 
+    **/
+
+   while (newList.firstChild) {
+      newList.removeChild(newList.lastChild)
+   }
 
    for (let h = 0; h < maxPages; h++) {
       const newListItem = document.createElement('li');
@@ -94,19 +104,9 @@ const searchBar = (list) => {
     */
 
    parentDiv.addEventListener('keyup', (event) => {
-      const removePag = document.querySelector('.pagination ul').className = 'pag-parent';
-      const pagParent = document.querySelector('.pag-parent');
-
-      //remove previous pagination links
-
-      const removePagLinks = () => {
-         while (pagParent.firstChild) {
-            pagParent.removeChild(pagParent.lastChild)
-         }
-      }
-      removePagLinks();
 
       //Filter the list of users to match what is searched
+
       const newList = [];
 
       for (let i = 0; i < list.length; i++) {
@@ -131,9 +131,8 @@ const searchBar = (list) => {
 
       //create new pagination links based on the number of items returned
 
-      appendPageLinks(newList);
-
       event.preventDefault();
+      appendPageLinks(newList);
    });
 }
 searchBar(studentList);
