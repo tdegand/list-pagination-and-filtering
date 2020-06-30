@@ -2,7 +2,7 @@ const studentList = document.querySelectorAll('.student-item');
 const studentsPerPage = 10;
 
 /***
- * ShowPage function finds the 
+ * ShowPage function finds the:
  * start index of an item based on page number entered
  * end of the index based on page number
  * returns the amount of list items with a total of 10 based on the page number entered
@@ -23,19 +23,18 @@ const showPage = (list, page) => {
 showPage(studentList, 1);
 
 /***
-   appendPAgeLinks-
+   appendPAgeLinks:
    finds Max Number of pages based on how many items are in the list of data
    creates the Elements to display the pagination links
 ***/
 
 const appendPageLinks = (list) => {
-   const maxPages = Math.floor(list.length / studentsPerPage);
+   const maxPages = Math.floor(list.length / studentsPerPage) + 1;
    const parentDiv = document.querySelector('.page');
    const pagDiv = document.createElement('div');
    parentDiv.appendChild(pagDiv).className = 'pagination';
    const newList = document.createElement('ul');
    pagDiv.appendChild(newList);
-
 
    for (let h = 0; h < maxPages; h++) {
       const newListItem = document.createElement('li');
@@ -59,3 +58,78 @@ const appendPageLinks = (list) => {
 
 }
 appendPageLinks(studentList);
+
+/***
+ * Search Bar Functionality:
+ * Create nodes/elements to create the search bar
+ * Add event listener to search button to filter the contents
+ * add keyup to input to filter contents in real time
+ * 
+ ***/
+
+const searchBar = (list) => {
+   const parentDiv = document.querySelector('.page-header');
+   const pagDiv = document.createElement('div');
+   parentDiv.appendChild(pagDiv).className = 'student-search';
+   const newInput = document.createElement('input');
+   newInput.placeholder = 'Search...';
+   const searchBut = document.createElement('button');
+   searchBut.innerHTML = 'Search';
+   pagDiv.appendChild(newInput);
+   pagDiv.appendChild(searchBut);
+   const noMatches = document.createElement('h3');
+
+   /**
+    * Event listener for submit button for the search
+    */
+   
+   searchBut.addEventListener('click', (event) => {
+      const filter = newInput.value.toLowerCase();
+      for (let i = 0; i < list.length; i++) {
+         const listItems = list[i].innerText.toLowerCase() || list[i].innerHTML.toLowerCase();
+
+         if (listItems.indexOf(filter) > -1 && event.target || filter === '') {
+            list[i].style.display = '';
+            noMatches.style.display = 'none';
+         } else {
+            list[i].style.display = 'none';
+            parentDiv.parentNode.insertBefore(noMatches, parentDiv.nextSibling);
+            noMatches.style.display = 'block';
+         }
+         if (filter !== listItems) {
+            noMatches.innerText = "No matches found";
+         }
+      }
+      if (filter === '') {
+         alert('Search cannot be empty!');
+      }
+   });
+
+   /**
+    * Event listener for key presses in input field
+    */
+
+   parentDiv.addEventListener('keyup', (event) => {
+      for (let i = 0; i < list.length; i++) {
+         const filter = newInput.value.toLowerCase();
+         const listItems = list[i].innerText.toLowerCase() || list[i].innerHTML.toLowerCase();
+
+         if (listItems.indexOf(filter) > -1 || filter === '') {
+            list[i].style.display = '';
+            noMatches.style.display = 'none';
+         } else {
+            list[i].style.display = 'none';
+            parentDiv.parentNode.insertBefore(noMatches, parentDiv.nextSibling);
+            noMatches.style.display = 'block';
+         }
+
+         if (filter !== listItems) {
+            noMatches.innerText = "No matches found";
+         }
+      }
+
+      event.preventDefault();
+   });
+}
+
+searchBar(studentList);
