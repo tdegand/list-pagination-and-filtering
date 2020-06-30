@@ -107,7 +107,7 @@ const searchBar = (list) => {
       removePagLinks();
 
       //Filter the list of users to match what is searched
-
+      const newList = [];
 
       for (let i = 0; i < list.length; i++) {
          const filter = newInput.value.toLowerCase();
@@ -115,11 +115,13 @@ const searchBar = (list) => {
 
          if (listItems.indexOf(filter) > -1 || filter === '') {
             list[i].style.display = '';
+            newList.push(list[i]);
             noMatches.style.display = 'none';
          } else {
             list[i].style.display = 'none';
             parentDiv.parentNode.insertBefore(noMatches, parentDiv.nextSibling);
             noMatches.style.display = 'block';
+
          }
 
          if (filter !== listItems) {
@@ -127,22 +129,9 @@ const searchBar = (list) => {
          }
       }
 
-      const numberOfItems = Math.floor(list[i].length / studentsPerPage) + 1;
-
       //create new pagination links based on the number of items returned
 
-
-
-      for (let h = 0; h < numberOfItems; h++) {
-         const newListItem = document.createElement('li');
-         pagParent.appendChild(newListItem);
-         newListItem.innerHTML = `<a href="#">${h + 1}</a>`;
-      }
-      const paginationLinks = document.getElementsByTagName('a');
-      paginationLinks[0].className = 'active';
-
-
-
+      appendPageLinks(newList);
 
       event.preventDefault();
    });
