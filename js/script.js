@@ -34,14 +34,8 @@ const appendPageLinks = (list) => {
    const pagDiv = document.createElement('div')
    pagDiv.id = 'pagination';
    pagDiv.className = 'pagination';
-   const div = document.getElementById('pagination');
    const newList = document.createElement('ul');
 
-   /**
-    * remove previous pagination links if they exist
-    * Add new pagination links
-    * 
-    **/
    parentDiv.appendChild(pagDiv)
    newList.className = 'pagParent';
    pagDiv.appendChild(newList);
