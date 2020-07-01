@@ -31,27 +31,20 @@ showPage(studentList, 1);
 const appendPageLinks = (list) => {
    const maxPages = Math.floor(list.length / studentsPerPage) + 1;
    const parentDiv = document.querySelector('.page');
-   const studentListParent = document.querySelector('.student-list');
-   const pagDiv = document.createElement('div');
+   const pagDiv = document.createElement('div')
+   pagDiv.id = 'pagination';
+   pagDiv.className = 'pagination';
+   const div = document.getElementById('pagination');
    const newList = document.createElement('ul');
 
-   //if elements dont already exist then create the pagination links
-
-   if (parentDiv.lastChild != pagDiv) {
-      parentDiv.appendChild(pagDiv).className = 'pagination';
-      newList.className = 'pagParent';
-      pagDiv.appendChild(newList);
-   }
-
-   while (newList.firstChild) {
-      newList.removeChild(newList.lastChild)
-   }
-
    /**
-    * remove previous pagination links
-    * Add new pagination links if the links do not exist
+    * remove previous pagination links if they exist
+    * Add new pagination links
     * 
     **/
+   parentDiv.appendChild(pagDiv)
+   newList.className = 'pagParent';
+   pagDiv.appendChild(newList);
 
    for (let h = 0; h < maxPages; h++) {
       const newListItem = document.createElement('li');
@@ -76,70 +69,71 @@ const appendPageLinks = (list) => {
 }
 appendPageLinks(studentList);
 
-/***
+/*** Plan on adding this later on as I struggled with it a ton. Code is below and commented out:
  * Search Bar Functionality:
  * Create nodes/elements to create the search bar
  * Add event listener to search button to filter the contents
  * add keyup to input to filter contents in real time
- * 
+ *
  ***/
 
-const searchBar = (list) => {
-   const parentDiv = document.querySelector('.page-header');
-   const pagDiv = document.createElement('div');
-   parentDiv.appendChild(pagDiv).className = 'student-search';
-   const newInput = document.createElement('input');
-   newInput.placeholder = 'Search...';
-   const searchBut = document.createElement('button');
-   searchBut.innerHTML = 'Reset';
-   pagDiv.appendChild(newInput);
-   pagDiv.appendChild(searchBut);
-   const noMatches = document.createElement('h3');
+// const searchBar = (list) => {
+//    const parentDiv = document.querySelector('.page-header');
+//    const pagDiv = document.createElement('div');
+//    parentDiv.appendChild(pagDiv).className = 'student-search';
+//    const newInput = document.createElement('input');
+//    newInput.placeholder = 'Search...';
+//    const searchBut = document.createElement('button');
+//    searchBut.innerHTML = 'Reset';
+//    pagDiv.appendChild(newInput);
+//    pagDiv.appendChild(searchBut);
+//    const noMatches = document.createElement('h3');
 
-   /**
-    * Event listener for submit button for the search
-    */
-   searchBut.addEventListener('click', (event) => {
-      for (let i = 0; i < list.length; i++) {
-         list[i].style.display = 'block';
-         noMatches.style.display = 'none';
-      }
-   });
+//    /**
+//     * Event listener for submit button for the search
+//     */
+//    searchBut.addEventListener('click', (event) => {
+//       for (let i = 0; i < list.length; i++) {
+//          list[i].style.display = 'block';
+//          noMatches.style.display = 'none';
+//       }
+//    });
 
-   /**
-    * Event listener for key presses in input field
-    */
+//    /**
+//     * Event listener for key presses in input field
+//     */
 
-   parentDiv.addEventListener('keyup', (event) => {
+//    parentDiv.addEventListener('keyup', (event) => {
 
-      //Filter the list of users to match what is searched
+//       //Filter the list of users to match what is searched
 
-      const newList = [];
+//       const newList = [];
 
-      for (let i = 0; i < list.length; i++) {
-         const filter = newInput.value.toLowerCase();
-         const listItems = list[i].innerText.toLowerCase() || list[i].innerHTML.toLowerCase();
+//       for (let i = 0; i < list.length; i++) {
+//          const filter = newInput.value.toLowerCase();
+//          const listItems = list[i].innerText.toLowerCase() || list[i].innerHTML.toLowerCase();
 
-         if (listItems.indexOf(filter) > -1 || filter === '') {
-            list[i].style.display = '';
-            newList.push(list[i]);
-            noMatches.style.display = 'none';
-         } else {
-            list[i].style.display = 'none';
-            parentDiv.parentNode.insertBefore(noMatches, parentDiv.nextSibling);
-            noMatches.style.display = 'block';
+//          if (listItems.indexOf(filter) > -1 || filter === '') {
+//             list[i].style.display = '';
+//             newList.push(list[i]);
+//             noMatches.style.display = 'none';
 
-         }
+//          } else {
+//             list[i].style.display = 'none';
+//             parentDiv.parentNode.insertBefore(noMatches, parentDiv.nextSibling);
+//             noMatches.style.display = 'block';
 
-         if (filter !== listItems) {
-            noMatches.innerText = "No matches found";
-         }
-      }
+//          }
 
-      //create new pagination links based on the number of items returned
+//          if (filter !== listItems) {
+//             noMatches.innerText = "No matches found";
+//          }
+//       }
 
-      event.preventDefault();
-      appendPageLinks(newList);
-   });
-}
-searchBar(studentList);
+//       //create new pagination links based on the number of items returned
+
+//       event.preventDefault();
+//       appendPageLinks(newList);
+//    });
+// }
+// searchBar(studentList);
