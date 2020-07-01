@@ -31,20 +31,27 @@ showPage(studentList, 1);
 const appendPageLinks = (list) => {
    const maxPages = Math.floor(list.length / studentsPerPage) + 1;
    const parentDiv = document.querySelector('.page');
+   const studentListParent = document.querySelector('.student-list');
    const pagDiv = document.createElement('div');
-   parentDiv.appendChild(pagDiv).className = 'pagination';
    const newList = document.createElement('ul');
-   newList.className = 'pagParent';
-   pagDiv.appendChild(newList);
+
+   //if elements dont already exist then create the pagination links
+
+   if (parentDiv.lastChild != pagDiv) {
+      parentDiv.appendChild(pagDiv).className = 'pagination';
+      newList.className = 'pagParent';
+      pagDiv.appendChild(newList);
+   }
+
+   while (newList.firstChild) {
+      newList.removeChild(newList.lastChild)
+   }
+
    /**
     * remove previous pagination links
     * Add new pagination links if the links do not exist
     * 
     **/
-
-   while (newList.firstChild) {
-      newList.removeChild(newList.lastChild)
-   }
 
    for (let h = 0; h < maxPages; h++) {
       const newListItem = document.createElement('li');
